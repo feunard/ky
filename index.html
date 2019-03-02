@@ -1,218 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Ky</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/simplemde.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    <style>
-        div, p, button, input, textarea {
-            font-family: "Fira Code Light", monospace !important;
-        }
-
-        body {
-            --primary: #6fb7ff;
-            --primary-25: rgba(111, 183, 255, 0.25);
-            position: fixed;
-            margin: 0;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: whitesmoke;
-            padding: 8px;
-            border-top: 8px solid white;
-        }
-
-        .fx {
-            display: flex;
-        }
-
-        .fx.-r {
-            height: 100%;
-            width: 100%;
-            margin: auto;
-            max-width: 800px;
-        }
-
-        .fx.-v {
-            flex-direction: column;
-        }
-
-        .fx.-x {
-            flex: 1;
-        }
-
-        .fx.-c {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        textarea, input, button, input {
-            transition: all 256ms ease;
-            margin: 8px;
-            padding: 8px;
-            background: white;
-            resize: none;
-            border: 1px solid lightgray;
-            box-shadow: 0 0 0 0 transparent;
-        }
-
-        textarea {
-            font-size: 1.2rem;
-        }
-
-        textarea:focus, input:focus, button:focus, input:focus {
-            outline: 0;
-            border: 1px solid var(--primary);
-            box-shadow: 0 0 0 2px var(--primary-25);
-        }
-
-        button {
-            background: transparent;
-            color: darkslategray;
-            font-weight: 400;
-            cursor: pointer;
-            position: relative;
-        }
-
-        button:hover {
-            border-color: grey;
-        }
-
-        button input {
-            cursor: pointer;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            opacity: 0;
-        }
-
-        .CodeMirror {
-            flex: 1;
-        }
-    </style>
-</head>
-<body>
-<div class="fx -r -v">
-    <input
-            id="secret"
-            name="secret"
-            autocomplete="secret"
-            type="password"
-            placeholder="SECRET"
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/simplemde.min.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
     />
-    <div class="fx -x -v">
+    <style>
+      div,
+      p,
+      button,
+      input,
+      textarea {
+        font-family: "Fira Code Light", monospace !important;
+      }
+
+      body {
+        --primary: #6fb7ff;
+        --primary-25: rgba(111, 183, 255, 0.25);
+        position: fixed;
+        margin: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: whitesmoke;
+        padding: 8px;
+        border-top: 8px solid white;
+      }
+
+      .fx {
+        display: flex;
+      }
+
+      .fx.-r {
+        height: 100%;
+        width: 100%;
+        margin: auto;
+        max-width: 800px;
+      }
+
+      .fx.-v {
+        flex-direction: column;
+      }
+
+      .fx.-x {
+        flex: 1;
+      }
+
+      .fx.-c {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      textarea,
+      input,
+      button,
+      .btn,
+      input {
+        transition: all 256ms ease;
+        margin: 8px;
+        padding: 8px;
+        background: white;
+        resize: none;
+        border: 1px solid lightgray;
+        box-shadow: 0 0 0 0 transparent;
+        font-size: 1rem;
+      }
+
+      textarea {
+        font-size: 1.2rem;
+      }
+
+      textarea:focus,
+      input:focus,
+      .btn:focus,
+      button:focus,
+      input:focus {
+        outline: 0;
+        border: 1px solid var(--primary);
+        box-shadow: 0 0 0 2px var(--primary-25);
+      }
+
+      .btn, button {
+        background: transparent;
+        color: darkslategray;
+        font-weight: 400;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .btn:hover, button:hover {
+        border-color: grey;
+      }
+
+      .btn input {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        opacity: 0;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+      }
+
+      button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      .CodeMirror {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="fx -r -v">
+      <input
+        id="secret"
+        name="secret"
+        autocomplete="secret"
+        type="password"
+        placeholder="SECRET"
+      />
+      <div class="fx -x -v">
         <textarea style="padding: 32px" id="input" class="fx -x"></textarea>
-    </div>
-    <div class="fx -v">
-        <textarea id="output"
-                  style="font-size: 0.6rem; min-height: 64px; color: darkslategray; background: transparent"
-                  class="fx -x -c"></textarea>
+      </div>
+      <div class="fx -v">
+        <textarea
+          id="output"
+          style="font-size: 0.6rem; min-height: 64px; color: darkslategray; background: transparent"
+          class="fx -x -c"
+        ></textarea>
         <div class="fx">
-            <button class="fx -x -c">
-                IMPORT
-                <input id="import" type="file" style="width: 100%"/>
-            </button>
-            <button id="export" class="fx -x -c">EXPORT</button>
+          <div class="fx -x -c btn">
+              OPEN
+              <input id="import" type="file"/>
+            </div>
+          <button id="export" class="fx -x -c">
+            SAVE
+          </button>
+          <button id="close" class="fx -x -c">
+            CLOSE
+          </button>
         </div>
-    </div>
-    <script src="js/simplemde.min.js"></script>
-    <script src="js/sjcl.min.js"></script>
-    <script>
+      </div>
+      <script src="js/simplemde.min.js"></script>
+      <script src="js/sjcl.min.js"></script>
+      <script>
         const reader = new FileReader();
         const editor = new SimpleMDE({
-            element: document.getElementById("input"),
-            autofocus: true,
-            spellChecker: false,
-            autoDownloadFontAwesome: false,
+          element: document.getElementById("input"),
+          autofocus: true,
+          spellChecker: false,
+          autoDownloadFontAwesome: false
         });
 
         const view = {
-            secret: document.getElementById("secret"),
-            output: document.getElementById("output"),
+          secret: document.getElementById("secret"),
+          output: document.getElementById("output")
         };
         const actions = {
-            import: document.getElementById("import"),
-            export: document.getElementById("export"),
+          close: document.getElementById("close"),
+          import: document.getElementById("import"),
+          export: document.getElementById("export")
         };
         let lastToBeEdited = "";
 
-        const commit = (el) => {
+        const commit = el => {
+          if (el === "secret") {
+            el = lastToBeEdited;
+          } else {
+            lastToBeEdited = el;
+          }
 
-            if (el === "secret") {
-                el = lastToBeEdited;
-            } else {
-                lastToBeEdited = el;
+          if (el === "input" && view.secret.value && editor.value()) {
+            try {
+              view.output.value = btoa(
+                sjcl.encrypt(view.secret.value, editor.value())
+              );
+            } catch (e) {
+              view.output.value = "Error: " + e.message;
             }
+          }
 
-            if (el === "input" && view.secret.value && editor.value()) {
-                try {
-                    view.output.value = btoa(sjcl.encrypt(view.secret.value, editor.value()));
-                } catch (e) {
-                    view.output.value = "Error: " + e.message;
-                }
+          if (el === "output" && view.secret.value && view.output.value) {
+            try {
+              editor.value(
+                sjcl.decrypt(view.secret.value, atob(view.output.value))
+              );
+            } catch (e) {
+              editor.value("Error: " + e.message);
             }
+          }
 
-            if (el === "output" && view.secret.value && view.output.value) {
-                try {
-                    editor.value(sjcl.decrypt(view.secret.value, atob(view.output.value)));
-                } catch (e) {
-                    editor.value("Error: " + e.message)
-                }
-            }
+          if (!view.output.value) {
+            actions.close.disabled = true;
+            actions.export.disabled = true;
+          } else {
+            actions.close.disabled = false;
+            actions.export.disabled = false;
+          }
         };
 
+        actions.close.disabled = true;
+        actions.export.disabled = true;
+
         const debounce = (delay = 1000, callback) => {
-            let timer = null;
-            return () => {
-                if (timer !== null) clearTimeout(timer);
-                timer = setTimeout(() => callback(), 1000);
-            };
+          let timer = null;
+          return () => {
+            if (timer !== null) clearTimeout(timer);
+            timer = setTimeout(() => callback(), 1000);
+          };
+        };
+
+        actions.close.onclick = () => {
+          view.output.value = "";
+          editor.value("");
+          view.secret.value = "";
+          editor.codemirror.clearHistory();
         };
 
         actions.export.onclick = () => {
-            if (!view.output.value) {
-                return;
-            }
+          if (!view.output.value) {
+            return;
+          }
 
-            commit("input");
+          commit("input");
 
-            const element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(view.output.value));
-            element.setAttribute('download', Math.random().toString(32).slice(2, 8) + ".ky");
+          const element = document.createElement("a");
+          element.setAttribute(
+            "href",
+            "data:text/plain;charset=utf-8," +
+              encodeURIComponent(view.output.value)
+          );
+          element.setAttribute(
+            "download",
+            Math.random()
+              .toString(32)
+              .slice(2, 8) + ".ky"
+          );
 
-            element.style.display = 'none';
-            document.body.appendChild(element);
+          element.style.display = "none";
+          document.body.appendChild(element);
 
-            element.click();
-            document.body.removeChild(element);
+          element.click();
+          document.body.removeChild(element);
         };
 
-        actions.import.onchange = (ev) => {
-            if (ev.target.files && ev.target.files[0]) {
-                if (!view.secret.value) {
-                    view.secret.focus();
-                }
-                reader.readAsText(ev.target.files[0]);
+        actions.import.onchange = ev => {
+          if (ev.target.files && ev.target.files[0]) {
+            if (!view.secret.value) {
+              view.secret.focus();
             }
+            reader.readAsText(ev.target.files[0]);
+          }
         };
 
         for (const el of Object.keys(view)) {
-            view[el].onkeyup = debounce(1000, () => commit(el));
-            view[el].onchange = debounce(1000, () => commit(el));
+          view[el].onkeyup = debounce(1000, () => commit(el));
+          view[el].onchange = debounce(1000, () => commit(el));
         }
 
-        reader.onloadend = (ev) => {
-            view.output.value = ev.target.result;
-            commit("output");
+        editor.codemirror.on("change", debounce(1000, () => commit("input")));
+
+        reader.onloadend = ev => {
+          view.output.value = ev.target.result;
+          commit("output");
         };
-    </script>
-</div>
-</body>
+      </script>
+    </div>
+  </body>
 </html>
